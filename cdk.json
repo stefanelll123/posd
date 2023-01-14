@@ -1,0 +1,3 @@
+{
+  "app": "python ./src/app.py"
+}
