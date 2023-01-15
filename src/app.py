@@ -134,7 +134,7 @@ class CognitoUserPoolStack(Stack):
                                     group_name="ItSupport", role_arn=itSupportRole.role_arn)
     
     updateGroupsPolicy = iam.PolicyStatement(
-            actions=["cognito-idp:AdminAddUserToGroup", "cognito-idp:AdminRemoveUserFromGroup"],
+            actions=["cognito-idp:AdminAddUserToGroup", "cognito-idp:AdminRemoveUserFromGroup", "cognito-idp:AdminCreateUser"],
             resources=[cognito_user_pool.user_pool_arn],
         )
     
