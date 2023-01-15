@@ -10,35 +10,14 @@ import { IUser, CognitoService } from '../cognito.service';
 })
 export class SignInComponent {
 
-  loading: boolean;
-  user: IUser;
+  loading = false;
+  user = {} as IUser;
 
   constructor(private router: Router,
               private cognitoService: CognitoService) {
-    this.loading = false;
-    this.user = {} as IUser;
   }
 
-  public signIn(): void {
-    this.loading = true;
-    this.cognitoService.signIn(this.user)
-    .then(() => {
-      this.router.navigate(['/profile']);
-    }).catch(() => {
-      this.loading = false;
-    });
+  signIn(): void {
+    this.cognitoService.signIn(this.user);
   }
-
-  public firstLogin(): void {
-    console.log('FirstLogin')
-    this.cognitoService.firstLogin(this.user)
-    .then(() => {
-      this.router.navigate(['/profile']);
-    });
-  }
-
-  public test(): void {
-    this.cognitoService.test(this.user.email, this.user.password).then();
-  }
-
 }

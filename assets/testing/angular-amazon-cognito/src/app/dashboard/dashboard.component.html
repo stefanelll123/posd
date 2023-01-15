@@ -1,0 +1,29 @@
+<div class="row">
+    <div class="col-sm-4 mb-3 mb-sm-0">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title text-primary">Profile file</h5>
+          <p class="card-text">Profile file includes informations about profile, such as name, email, company role.</p>
+          <button (click)="download('profile')" class="btn btn-primary">Download</button>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-4">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title text-primary">Employee file</h5>
+            <p class="card-text">Employee file includes a list with all the employees of the company</p>
+            <button (click)="download('employee')" class="btn btn-primary">Download</button>
+        </div>
+        </div>
+      </div>
+    <div class="col-sm-4">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title text-primary">Salaries file</h5>
+          <p class="card-text">Salaries file includes a list with all the employees salary</p>
+          <button (click)="download('salaries')" class="btn btn-primary">Download</button>
+        </div>
+      </div>
+    </div>
+</div>
