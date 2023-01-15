@@ -7,7 +7,13 @@ from aws_cdk import (
     aws_s3 as s3,
     aws_s3_deployment as s3deploy,
     aws_iam as iam,
-    region_info as regionInfo
+    aws_lambda as awsLambda,
+    aws_lambda_nodejs as awsLambdaNodejs,
+    Duration,
+    CfnOutput,
+    aws_ecs as ecs,
+    aws_ec2 as ec2,
+    aws_ecs_patterns as ecsPatterns
 )
 from constructs import Construct
 
@@ -127,6 +133,56 @@ class CognitoUserPoolStack(Stack):
                                     description='User pool group for it support',
                                     group_name="ItSupport", role_arn=itSupportRole.role_arn)
     
+    updateGroupsPolicy = iam.PolicyStatement(
+            actions=["cognito-idp:AdminAddUserToGroup", "cognito-idp:AdminRemoveUserFromGroup"],
+            resources=[cognito_user_pool.user_pool_arn],
+        )
+    
+    cluster = ecs.Cluster(self, 'posd')
+    service = ecsPatterns.ApplicationLoadBalancedFargateService(self, "Service",
+            cluster=cluster,
+            memory_limit_mib=1024,
+            task_image_options=ecsPatterns.ApplicationLoadBalancedTaskImageOptions(
+                image=ecs.ContainerImage.from_asset('./assets/server'),
+                container_port=8801,
+                environment={
+                    "USER_POOL_ID": cognito_user_pool.user_pool_id,
+                    "USER_POOL_WEB_CLIENT_ID": app_client.user_pool_client_id,
+                    "PROFILE_BUCKET": profileBucket.bucket_name,
+                    "EMPLOYEES_BUCKET": employeesBucket.bucket_name,
+                    "SALARIES_BUCKET": salariesBucket.bucket_name
+                }
+            ),
+            desired_count=1
+    )
+    
+    profileBucket.grant_read(service.task_definition.task_role)
+    employeesBucket.grant_read(service.task_definition.task_role)
+    salariesBucket.grant_read(service.task_definition.task_role)
+    
+    profileBucket.grant_read(service.task_definition.execution_role)
+    employeesBucket.grant_read(service.task_definition.execution_role)
+    salariesBucket.grant_read(service.task_definition.execution_role)
+    
+    service.task_definition.add_to_task_role_policy(updateGroupsPolicy)
+    service.task_definition.add_to_execution_role_policy(updateGroupsPolicy)
+    
+    dummyBucker = s3.Bucket(self, 'dummy-bucket-14', block_public_access=s3.BlockPublicAccess.BLOCK_ALL)
+
+    
+    #vpc = ec2.Vpc.from_lookup(self, "VPC", is_default=True)
+    #cluster = ecs.Cluster(self, 'posd')
+    
+    #taskDefinition = ecs.FargateTaskDefinition(self, 'server')
+    #taskDefinition.add_container('server', 
+    #                             image=ecs.ContainerImage.from_asset('./assets/server'), 
+    #                             port_mappings={"container_port": 8801})
+    #
+    #taskDefinition.add_to_task_role_policy(updateGroupsPolicy)
+    #taskDefinition.add_to_execution_role_policy(updateGroupsPolicy)
+    #
+    #service = ecs.FargateService(self, 'FargateService', cluster=cluster, task_definition=taskDefinition, desired_count=1)
+
     
 CognitoUserPoolStack(app, "CognitoUserPoolStack")
 app.synth()
