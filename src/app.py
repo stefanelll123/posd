@@ -38,10 +38,10 @@ class CognitoUserPoolStack(Stack):
       standard_attributes=cognito.StandardAttributes(
           family_name=cognito.StandardAttribute(
               required=True,
-              mutable=False,
+              mutable=True,
           ),
           address=cognito.StandardAttribute(
-              required=False,
+              required=True,
               mutable=True
           )
       ),

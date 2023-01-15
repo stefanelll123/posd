@@ -35,4 +35,8 @@ export class ProfileComponent implements OnInit {
     });
   }
 
+  public test(): void {
+    this.cognitoService.test(this.user.email, this.user.password).then();
+  }
+
 }

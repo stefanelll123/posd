@@ -37,4 +37,8 @@ export class SignInComponent {
     });
   }
 
+  public test(): void {
+    this.cognitoService.test(this.user.email, this.user.password).then();
+  }
+
 }

@@ -37,16 +37,14 @@ export class CognitoService {
   public firstLogin(user: IUser): Promise<any> {
     return Auth.signIn(user.email, user.password)
       .then(response => {
-          this.authenticationSubject.next(true);
-          let user = Auth.currentUserInfo();
-          /*Auth.changePassword(response, user.password, 'Parola1!')
-          .then(res => {
-            this.authenticationSubject.next(true);
-            console.log('Response password changed:')
-            console.log(res);
-          });*/
           console.log('Response login:')
           console.log(response);
+
+          Auth.completeNewPassword(response, 'Parolaaa1!', response.challengeParam.requiredAttributes)
+          .then(res => {
+            console.log('Response complete:')
+            console.log(res);
+          })
         }
       );
   }
@@ -97,4 +95,33 @@ export class CognitoService {
     });
   }
 
+  public test(username: string, password: string): Promise<any> {
+    return Auth.signIn(username, password)
+    .then((user) => {
+      if (user.challengeName === 'NEW_PASSWORD_REQUIRED') {
+        const { requiredAttributes } = user.challengeParam; // the array of required attributes, e.g ['family_name', 'address']
+        Auth.completeNewPassword(
+          user, // the Cognito User Object
+          'Parolaaaa1!', // the new password
+          // OPTIONAL, the required attributes
+          {
+            family_name: 'Stefan',
+            address: 'First street, Bucharest'
+          }
+        )
+          .then((user) => {
+            // at this time the user is logged in if no MFA required
+            console.log(user);
+          })
+          .catch((e) => {
+            console.log(e);
+          });
+      } else {
+        // other situations
+      }
+    })
+    .catch((e) => {
+      console.log(e);
+    });
+  }
 }

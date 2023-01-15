@@ -32,6 +32,12 @@
               First login
             </button>
           </div>
+          <div class="col d-grid">
+            <button type="button" (click)="test()" class="btn btn-sm btn-success" [disabled]="loading">
+              <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true" *ngIf="loading"></span>
+              Test
+            </button>
+          </div>
         </div>
       </div>
     </div>
