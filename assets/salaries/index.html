@@ -1,5 +1,139 @@
-<html>
-  <body>
-    <p>This is a list with salaries</p>
-  </body>
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Salaries page</title>
+        <style>
+            body {
+                margin: 0;
+                font-family: Arial, Helvetica, sans-serif;
+            }
+
+            .title {
+                background-color: #318CE7;
+                padding: 30px 40px;
+                font-size: 25px;
+                color: white;
+            }
+
+            .subtitle {
+                padding: 20px 40px;
+                font-size: 18px;
+            }
+
+            .container-table {
+                max-width: 1000px;
+                margin-right: auto;
+                margin-left: auto;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                min-height: 100vh;
+            }
+
+            .table {
+                padding: 0 40px;
+            }
+
+            .table-header {
+                display: flex;
+                width: 100%;
+                background-color: #318CE7;
+                padding: 18px 0;
+            }
+
+            .table-row {
+                display: flex;
+                width: 100%;
+                padding: 18px 0;
+            }
+
+            .table-row:nth-of-type(odd) {
+                background: rgba(49, 140, 231, 0.1);
+            }
+
+            .table-data, .header-item {
+                flex: 1 1 20%;
+                text-align: center;
+            }
+
+            .header-item {
+                color: white;
+                background-color: #318CE7;
+            }
+        </style>
+    </head>
+    
+    <body>
+        <div class="container">
+            <div class="title">Salaries page</div>
+            <div class="subtitle">This is the page with all employees salsaries where you can see sensitive data!</div>
+            <div class="table">
+                <div class="table-header">
+                    <div class="header-item">First name</div>
+                    <div class="header-item">Last name</div>
+                    <div class="header-item">Role</div>
+                    <div class="header-item">Salary</div>
+                </div>
+                <div class="table-content" id="table-content">	
+                </div>	
+            </div>
+        </div>
+
+        <script>
+            const employees = [
+                {
+                    firstName: 'Mihai',
+                    lastName: 'Costea',
+                    role: 'CEO',
+                    salary: '4000$'
+                },
+                {
+                    firstName: 'Andrei',
+                    lastName: 'Ionut',
+                    role: 'Manager',
+                    salary: '1400$'
+                },
+                {
+                    firstName: 'Mihai',
+                    lastName: 'Sirbu',
+                    role: 'Finance',
+                    salary: '1000$'
+                },
+                {
+                    firstName: 'Ion',
+                    lastName: 'Mihalache',
+                    role: 'IT Support',
+                    salary: '700$'
+                },
+                {
+                    firstName: 'Tudor',
+                    lastName: 'Manea',
+                    role: 'Employee',
+                    salary: '800$'
+                }
+            ];
+
+            function renderDataInTheTable(employee) {
+                const mytable = document.getElementById("table-content");
+                
+                employees.forEach(employee => {
+                    let newRow = document.createElement("div");
+                    newRow.classList.add('table-row');
+                    
+                    Object.values(employee).forEach((value) => {
+                        let cell = document.createElement("div");
+                        cell.classList.add('table-data');
+                        cell.innerText = value;
+                        newRow.appendChild(cell);
+                    })
+                    
+                    mytable.appendChild(newRow);
+                });
+            }
+
+            renderDataInTheTable(employees)
+        </script>
+    </body>
 </html>
