@@ -8,7 +8,7 @@ import boto3
 
 app = Flask(__name__)
 CORS(app)
-#cors = CORS(app, resources={r"*": {"origins": "*"}})
+cors = CORS(app, resources={r"*": {"origins": "*"}})
 
 def validateGroupUpdateInput(input):
     if input.get('username') == None or input.get('groupName') == None:
@@ -41,7 +41,7 @@ def validateRole(headers, action):
     
 
 @app.route("/api/access/add", methods = ['POST'])
-#@cross_origin()
+@cross_origin()
 def addAccess():
     try:
         if not validateRole(request.headers, 'access'):
@@ -68,7 +68,7 @@ def addAccess():
         return Response(status=500)
   
 @app.route("/api/access/remove", methods = ['POST'])
-#@cross_origin()
+@cross_origin()
 def removeAccess():
     try:    
         if not validateRole(request.headers, 'access'):
@@ -94,7 +94,7 @@ def removeAccess():
         return Response(status=500) 
     
 @app.route("/api/profile", methods = ['GET'])
-#@cross_origin()
+@cross_origin()
 def getProfile():
     try:    
         if not validateRole(request.headers, 'profile'):
@@ -112,7 +112,7 @@ def getProfile():
     
     
 @app.route("/api/employees", methods = ['GET'])
-#@cross_origin()
+@cross_origin()
 def getEmployees():
     try:    
         if not validateRole(request.headers, 'employees'):
@@ -132,7 +132,7 @@ def getEmployees():
         return Response(status=500) 
     
 @app.route("/api/salaries", methods = ['GET'])
-#@cross_origin()
+@cross_origin()
 def getSalaries():
     try:    
         if not validateRole(request.headers, 'salaries'):
@@ -149,7 +149,7 @@ def getSalaries():
         return Response(status=500) 
 
 @app.route("/api/users", methods = ['POST'])
-#@cross_origin()
+@cross_origin()
 def createUser():
     try:
         if not validateRole(request.headers, 'access'):
@@ -181,6 +181,7 @@ def createUser():
         return Response(status=500)
 
 @app.route('/api/test', methods = ['POST'])
+@cross_origin()
 def testing():
     print('START TESTING')
     try:
