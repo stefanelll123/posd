@@ -167,7 +167,7 @@ class CognitoUserPoolStack(Stack):
     service.task_definition.add_to_task_role_policy(updateGroupsPolicy)
     service.task_definition.add_to_execution_role_policy(updateGroupsPolicy)
     
-    dummyBucker = s3.Bucket(self, 'dummy-bucket-14', block_public_access=s3.BlockPublicAccess.BLOCK_ALL)
+    dummyBucker = s3.Bucket(self, 'dummy-bucket-15', block_public_access=s3.BlockPublicAccess.BLOCK_ALL)
 
     
     #vpc = ec2.Vpc.from_lookup(self, "VPC", is_default=True)
