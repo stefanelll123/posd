@@ -6,7 +6,8 @@
           </li>
         </ul>
       </div>
-      <form class="form-inline my-2 my-lg-0">
+      <form class="form-inline my-2 my-lg-0 d-flex">
+        <div>{{cognitoService.user.attributes.email}}</div>
         <button class="btn btn-outline-light my-2 my-sm-0" (click)="logout()">Logout</button>
       </form>
 </nav>

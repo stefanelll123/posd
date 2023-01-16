@@ -19,6 +19,7 @@ export interface IUser {
 export class CognitoService {
 
   userConfirmationPassword: any;
+  user: any;
 
   constructor(
     private router: Router,
@@ -31,7 +32,7 @@ export class CognitoService {
   async getCurrentUser() {
     try {
       const user = await Auth.currentUserInfo();   
-      console.log(user)   
+      this.user = user;
     } catch (error) {
       console.log(error);
     }

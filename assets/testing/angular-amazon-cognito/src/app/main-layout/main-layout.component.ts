@@ -13,7 +13,7 @@ export class MainLayoutComponent implements OnInit {
 
   constructor(
     public router: Router,
-    private cognitoService: CognitoService) {
+    public cognitoService: CognitoService) {
   }
 
   ngOnInit(): void {
