@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 @Injectable({
@@ -17,11 +17,13 @@ export class ApiService {
   download(file: string): Observable<any> {
     const url: {[key: string]: string} = {
       employee: '/api/employees',
-      profile: 'apo/profile',
-      salaries: 'api/salaries'
+      profile: '/api/profile',
+      salaries: '/api/salaries'
     }
 
-    return this.http.get(this.baseUrl + url[file]);
+    return this.http.get(this.baseUrl + url[file], {headers: new HttpHeaders({'Accept': 'text/html'}), responseType: 'text'}).pipe(map(response => {
+      return response;
+    }));
   }
 
   createUser(user: any): Observable<any> {

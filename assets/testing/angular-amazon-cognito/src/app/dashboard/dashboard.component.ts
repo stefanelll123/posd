@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { map, take } from 'rxjs';
 import { ApiService } from './api.service';
 
 @Component({
@@ -15,6 +16,12 @@ export class DashboardComponent {
   }
 
   download(file: string): void {
-    this.apiService.download(file).subscribe();
+    this.apiService.download(file).pipe(
+      take(1),
+      map(response => {
+        const newWindow = window.open();
+        newWindow?.document.write(response)
+      })
+    ).subscribe();
   }
 }
