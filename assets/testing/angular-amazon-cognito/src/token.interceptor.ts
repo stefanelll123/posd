@@ -24,11 +24,6 @@ export class TokenInterceptor implements HttpInterceptor {
             return next.handle(reqClone)
                 .pipe(
                     catchError(error => {
-                        if (error.status === 401) {
-                            localStorage.removeItem('access_token')
-                            localStorage.removeItem('user')
-                            this.router.navigate(['/login']);
-                        }
                         return throwError(error);
                     }),
                 );
