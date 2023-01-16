@@ -7,11 +7,33 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 })
 export class ApiService {
 
+  baseUrl = 'http://Cogni-Servi-CIMZS9RDUB18-1512614307.us-east-1.elb.amazonaws.com';
+
   constructor(
     private http: HttpClient
-  ) { }
+  ) { 
+  }
 
   download(file: string): Observable<any> {
-    return this.http.get('');
+    const url: {[key: string]: string} = {
+      employee: '/api/employees',
+      profile: 'apo/profile',
+      salaries: 'api/salaries'
+    }
+
+    return this.http.get(this.baseUrl + url[file]);
+  }
+
+  createUser(user: any): Observable<any> {
+    delete user.showPassword;
+    return this.http.post(this.baseUrl + '/api/users', user);
+  }
+
+  addRole(user: any): Observable<any> {
+    return this.http.post(this.baseUrl + '/api/access/add', user);
+  }
+
+  removeRole(user: any): Observable<any> {
+    return this.http.post(this.baseUrl + '/api/access/remove', user);
   }
 }

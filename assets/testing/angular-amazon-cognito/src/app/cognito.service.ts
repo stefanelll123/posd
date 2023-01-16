@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
 import { Amplify, Auth } from 'aws-amplify';
 
 import { environment } from '../environments/environment';
@@ -31,7 +30,8 @@ export class CognitoService {
 
   async getCurrentUser() {
     try {
-      const user = await Auth.currentUserInfo();      
+      const user = await Auth.currentUserInfo();   
+      console.log(user)   
     } catch (error) {
       console.log(error);
     }
@@ -47,7 +47,7 @@ export class CognitoService {
         return;
       }
 
-      // localStorage.setItem('access_token', user.AuthenticationResult.AccessToken)
+      localStorage.setItem('access_token', user.signInUserSession.accessToken.jwtToken)
       this.router.navigate(['/dashboard'])
     } catch (error) {
       console.log(error);

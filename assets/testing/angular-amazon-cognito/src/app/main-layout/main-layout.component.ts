@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
 import { CognitoService } from '../cognito.service';
 
 @Component({
@@ -8,10 +9,41 @@ import { CognitoService } from '../cognito.service';
 })
 export class MainLayoutComponent implements OnInit {
 
-  constructor(private cognitoService: CognitoService) {
+  menu: any;
+
+  constructor(
+    public router: Router,
+    private cognitoService: CognitoService) {
   }
 
   ngOnInit(): void {
+    this.initMenu();
     this.cognitoService.getCurrentUser();
+  }
+
+  initMenu(): void {
+    this.menu = [
+      {
+        name: 'Dashboard',
+        url: '/dashboard'
+      },
+      {
+        name: 'Create user',
+        url: '/user-create'
+      },
+      {
+        name: 'Add role',
+        url: '/add-role'
+      },
+      {
+        name: 'Remove role',
+        url: '/remove-role'
+      },
+    ]
+  }
+
+  logout(): void {
+    localStorage.removeItem('access_token');
+    this.router.navigate(['/signIn']);
   }
 }

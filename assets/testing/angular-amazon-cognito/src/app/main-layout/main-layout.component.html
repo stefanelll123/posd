@@ -1,17 +1,14 @@
 <nav class="navbar navbar-expand-lg bg-body-tertiary bg-primary">
-    <div class="container-fluid">
-      <a class="navbar-brand text-light" href="#">App</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item">
-            <a class="nav-link text-light active" aria-current="page" href="#">Home</a>
+          <li class="nav-item" *ngFor="let item of menu">
+            <a class="nav-link text-light" [ngClass]="{'active': router.url === item.url}" aria-current="page" [href]="item.url">{{item.name}}</a>
           </li>
         </ul>
       </div>
-    </div>
+      <form class="form-inline my-2 my-lg-0">
+        <button class="btn btn-outline-light my-2 my-sm-0" (click)="logout()">Logout</button>
+      </form>
 </nav>
 
 <div class="content">

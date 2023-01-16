@@ -7,6 +7,8 @@ import { MainLayoutComponent } from './main-layout/main-layout.component';
 
 import { SignInConfirmationComponent } from './sign-in-confirmation/sign-in-confirmation.component';
 import { SignInComponent } from './sign-in/sign-in.component';
+import { UserCreateComponent } from './user-create/user-create.component';
+import { UserRoleComponent } from './user-role/user-role.component';
 
 const routes: Routes = [
   {
@@ -28,6 +30,18 @@ const routes: Routes = [
       {
         path: 'dashboard',
         component: DashboardComponent,
+      },
+      {
+        path: 'user-create',
+        component: UserCreateComponent,
+      },
+      {
+        path: 'add-role',
+        component: UserRoleComponent,
+      },
+      {
+        path: 'remove-role',
+        component: UserRoleComponent,
       },
     ]
   }
